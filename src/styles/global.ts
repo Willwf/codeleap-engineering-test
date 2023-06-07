@@ -16,4 +16,11 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${Styles.gray}
   }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `
