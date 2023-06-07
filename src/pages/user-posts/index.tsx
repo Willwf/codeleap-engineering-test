@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import * as Styles from "./styles";
 import { UserPost } from "../../components/user-post";
 
@@ -22,12 +22,6 @@ export function UsersPosts(props: userPostsProps) {
 
   const [postsData, setPostsData] = useState<PostData[]>([]);
 
-  // const [id, setId] = useState<number>()
-  // const [username, setUsername] = useState<string>()
-  // const [createdTime, setCreatedTime] = useState<Date>()
-  // const [title, setTitle] = useState<string>()
-  // const [content, setContent] = useState<string>()
-
   function handleTitleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setTitleInput(event.target.value);
   }
@@ -36,15 +30,44 @@ export function UsersPosts(props: userPostsProps) {
     setContentInput(event.target.value);
   }
 
-  useEffect(() => {
-    fetch("https://dev.codeleap.co.uk/careers/")
+  async function fetchPosts() {
+    await fetch("https://dev.codeleap.co.uk/careers/")
       .then((response) => response.json())
       .then((data) => {
         setPostsData(data.results);
+      })
+      .catch((error) => {
+        console.error(error);
       });
-  }, []);
+  }
 
-  console.log(postsData);
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: loggedUser,
+        title: formData.get("title"),
+        content: formData.get("content"),
+      }),
+    };
+
+    await fetch("https://dev.codeleap.co.uk/careers/", requestOptions)
+      .then((response) => response.json())
+      .then(() => fetchPosts())
+      .catch((error) => console.error(error));
+
+    setTitleInput("");
+    setContentInput("");
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <>
@@ -52,7 +75,7 @@ export function UsersPosts(props: userPostsProps) {
         <Styles.HeaderTitle>CodeLeap Network</Styles.HeaderTitle>
       </Styles.Header>
       <Styles.Main>
-        <Styles.Form>
+        <Styles.Form onSubmit={handleSubmit}>
           <Styles.FormTitle>What's on your mind?</Styles.FormTitle>
 
           <Styles.InputDiv>
