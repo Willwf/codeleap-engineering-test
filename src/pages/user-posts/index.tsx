@@ -70,7 +70,7 @@ export function UsersPosts(props: userPostsProps) {
   }, []);
 
   return (
-    <>
+    <Styles.AppDiv>
       <Styles.Header>
         <Styles.HeaderTitle>CodeLeap Network</Styles.HeaderTitle>
       </Styles.Header>
@@ -121,10 +121,11 @@ export function UsersPosts(props: userPostsProps) {
               createdDate={postData.created_datetime}
               title={postData.title}
               content={postData.content}
+              fetchPosts={fetchPosts}
             />
           );
         })}
       </Styles.Main>
-    </>
+    </Styles.AppDiv>
   );
 }

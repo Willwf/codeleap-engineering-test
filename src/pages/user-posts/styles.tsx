@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import * as Styles from "../../styles/variables";
 
+export const AppDiv = styled.div`
+  // position: relative;
+`;
+
 export const Header = styled.main`
   width: 800px;
   height: 80px;

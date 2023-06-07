@@ -5,6 +5,7 @@ dayjs.extend(relativeTime);
 
 import edit from "../../assets/edit-icon.svg";
 import trash from "../../assets/trash-icon.svg";
+import { useState } from "react";
 
 interface UserPostProps {
   loggedUser: string;
@@ -13,10 +14,27 @@ interface UserPostProps {
   createdDate: string;
   title: string;
   content: string;
+  fetchPosts(): Promise<void>;
 }
 
 export function UserPost(props: UserPostProps) {
-  const { loggedUser, id, username, createdDate, title, content } = props;
+  const { loggedUser, id, username, createdDate, title, content, fetchPosts } =
+    props;
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  function ToggleDeleteModal() {
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+  }
+
+  async function DeletePost() {
+    await fetch(`https://dev.codeleap.co.uk/careers/${id}/`, {
+      method: "DELETE",
+    }).then(() => {
+      ToggleDeleteModal();
+      fetchPosts();
+    });
+  }
 
   return (
     <Styles.UserPostArticle id={`${id}`}>
@@ -24,7 +42,7 @@ export function UserPost(props: UserPostProps) {
         <Styles.PostTitle>{title}</Styles.PostTitle>
 
         <Styles.IconsDiv className={username === loggedUser ? "" : "hidden"}>
-          <Styles.IconButton>
+          <Styles.IconButton onClick={ToggleDeleteModal}>
             <Styles.Iconimg
               src={trash}
               alt="Icon of a trash can from a delete button"
@@ -37,6 +55,22 @@ export function UserPost(props: UserPostProps) {
             />
           </Styles.IconButton>
         </Styles.IconsDiv>
+
+        <Styles.DeleteModal className={isDeleteModalOpen ? "" : "hidden"}>
+          <Styles.DeleteDiv>
+            <Styles.DeleteModalTitle>
+              Are you sure you want to delete this item?
+            </Styles.DeleteModalTitle>
+            <Styles.ButtonsDiv>
+              <Styles.CancelButton onClick={ToggleDeleteModal}>
+                Cancel
+              </Styles.CancelButton>
+              <Styles.DeleteButton onClick={DeletePost}>
+                Delete
+              </Styles.DeleteButton>
+            </Styles.ButtonsDiv>
+          </Styles.DeleteDiv>
+        </Styles.DeleteModal>
       </Styles.PostTitleDiv>
 
       <Styles.ArticleDiv>
