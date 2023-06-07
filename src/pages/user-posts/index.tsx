@@ -1,9 +1,32 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as Styles from "./styles";
+import { UserPost } from "../../components/user-post";
 
-export function UsersPosts() {
+interface userPostsProps {
+  loggedUser: string;
+}
+
+interface PostData {
+  id: number;
+  username: string;
+  created_datetime: string;
+  title: string;
+  content: string;
+}
+
+export function UsersPosts(props: userPostsProps) {
+  const { loggedUser } = props;
+
   const [titleInput, setTitleInput] = useState<string>("");
   const [contentInput, setContentInput] = useState<string>("");
+
+  const [postsData, setPostsData] = useState<PostData[]>([]);
+
+  // const [id, setId] = useState<number>()
+  // const [username, setUsername] = useState<string>()
+  // const [createdTime, setCreatedTime] = useState<Date>()
+  // const [title, setTitle] = useState<string>()
+  // const [content, setContent] = useState<string>()
 
   function handleTitleInputChange(event: ChangeEvent<HTMLInputElement>) {
     setTitleInput(event.target.value);
@@ -12,6 +35,16 @@ export function UsersPosts() {
   function handleContentInputChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setContentInput(event.target.value);
   }
+
+  useEffect(() => {
+    fetch("https://dev.codeleap.co.uk/careers/")
+      .then((response) => response.json())
+      .then((data) => {
+        setPostsData(data.results);
+      });
+  }, []);
+
+  console.log(postsData);
 
   return (
     <>
@@ -54,6 +87,20 @@ export function UsersPosts() {
             </Styles.SubmitButton>
           </Styles.ButtonDiv>
         </Styles.Form>
+
+        {postsData.map((postData) => {
+          return (
+            <UserPost
+              key={postData.id}
+              loggedUser={loggedUser}
+              id={postData.id}
+              username={postData.username}
+              createdDate={postData.created_datetime}
+              title={postData.title}
+              content={postData.content}
+            />
+          );
+        })}
       </Styles.Main>
     </>
   );

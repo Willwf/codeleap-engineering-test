@@ -19,10 +19,13 @@ export const HeaderTitle = styled.h1`
 `;
 
 export const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
   width: 800px;
 
   background-color: ${Styles.white};
-
   padding: 24px;
 `;
 export const Form = styled.form`

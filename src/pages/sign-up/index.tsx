@@ -8,11 +8,11 @@ import {
 import * as Styles from "./styles";
 
 interface SignUpProps {
-  setUsername: Dispatch<SetStateAction<string>>;
+  setLoggedUser: Dispatch<SetStateAction<string>>;
 }
 
 export function SignUp(props: SignUpProps) {
-  const { setUsername } = props;
+  const { setLoggedUser } = props;
   const [usernameInput, setUsernameInput] = useState<string>("");
 
   function handleUsernameInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -26,7 +26,7 @@ export function SignUp(props: SignUpProps) {
     const username = formData.get("username");
 
     if (username !== null) {
-      setUsername(username.toString());
+      setLoggedUser(username.toString());
     }
   }
 
