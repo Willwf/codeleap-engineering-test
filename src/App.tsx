@@ -3,7 +3,7 @@ import { SignUp } from "./pages/sign-up";
 import { UsersPosts } from "./pages/user-posts";
 
 export function App() {
-  const [loggedUser, setLoggedUser] = useState<string>("zuko");
+  const [loggedUser, setLoggedUser] = useState<string>("");
 
   if (loggedUser) {
     return <UsersPosts loggedUser={loggedUser} />;

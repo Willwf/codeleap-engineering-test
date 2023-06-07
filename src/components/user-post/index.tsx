@@ -6,6 +6,7 @@ dayjs.extend(relativeTime);
 import edit from "../../assets/edit-icon.svg";
 import trash from "../../assets/trash-icon.svg";
 import { useState } from "react";
+import { EditPostModal } from "../edit-post-modal";
 
 interface UserPostProps {
   loggedUser: string;
@@ -21,10 +22,15 @@ export function UserPost(props: UserPostProps) {
   const { loggedUser, id, username, createdDate, title, content, fetchPosts } =
     props;
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setisEditModalOpen] = useState<boolean>(false);
 
   function ToggleDeleteModal() {
     setIsDeleteModalOpen(!isDeleteModalOpen);
+  }
+
+  function ToggleEditModal() {
+    setisEditModalOpen(!isEditModalOpen);
   }
 
   async function DeletePost() {
@@ -48,7 +54,7 @@ export function UserPost(props: UserPostProps) {
               alt="Icon of a trash can from a delete button"
             />
           </Styles.IconButton>
-          <Styles.IconButton>
+          <Styles.IconButton onClick={ToggleEditModal}>
             <Styles.Iconimg
               src={edit}
               alt="Icon of a pen from an edit button"
@@ -71,6 +77,14 @@ export function UserPost(props: UserPostProps) {
             </Styles.ButtonsDiv>
           </Styles.DeleteDiv>
         </Styles.DeleteModal>
+
+        <EditPostModal
+          setisEditModalOpen={setisEditModalOpen}
+          isEditModalOpen={isEditModalOpen}
+          fetchPosts={fetchPosts}
+          id={id}
+          ToggleEditModal={ToggleEditModal}
+        />
       </Styles.PostTitleDiv>
 
       <Styles.ArticleDiv>

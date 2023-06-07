@@ -105,6 +105,7 @@ export function UsersPosts(props: userPostsProps) {
           <Styles.ButtonDiv>
             <Styles.SubmitButton
               disabled={titleInput && contentInput ? false : true}
+              type="submit"
             >
               Create
             </Styles.SubmitButton>
