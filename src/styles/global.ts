@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: ${Styles.gray}
+    background-color: ${Styles.gray};
   }
 
   #root {
