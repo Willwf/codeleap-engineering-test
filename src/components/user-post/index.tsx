@@ -1,12 +1,13 @@
 import * as Styles from "./styles";
+import { useState } from "react";
+import { EditPostModal } from "../edit-post-modal";
+import { DeleteModal } from "../delete-modal";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 import edit from "../../assets/edit-icon.svg";
 import trash from "../../assets/trash-icon.svg";
-import { useState } from "react";
-import { EditPostModal } from "../edit-post-modal";
 
 interface UserPostProps {
   loggedUser: string;
@@ -33,15 +34,6 @@ export function UserPost(props: UserPostProps) {
     setisEditModalOpen(!isEditModalOpen);
   }
 
-  async function DeletePost() {
-    await fetch(`https://dev.codeleap.co.uk/careers/${id}/`, {
-      method: "DELETE",
-    }).then(() => {
-      ToggleDeleteModal();
-      fetchPosts();
-    });
-  }
-
   return (
     <Styles.UserPostArticle id={`${id}`}>
       <Styles.PostTitleDiv>
@@ -62,21 +54,12 @@ export function UserPost(props: UserPostProps) {
           </Styles.IconButton>
         </Styles.IconsDiv>
 
-        <Styles.DeleteModal className={isDeleteModalOpen ? "" : "hidden"}>
-          <Styles.DeleteDiv>
-            <Styles.DeleteModalTitle>
-              Are you sure you want to delete this item?
-            </Styles.DeleteModalTitle>
-            <Styles.ButtonsDiv>
-              <Styles.CancelButton onClick={ToggleDeleteModal}>
-                Cancel
-              </Styles.CancelButton>
-              <Styles.DeleteButton onClick={DeletePost}>
-                Delete
-              </Styles.DeleteButton>
-            </Styles.ButtonsDiv>
-          </Styles.DeleteDiv>
-        </Styles.DeleteModal>
+        <DeleteModal
+          isDeleteModalOpen={isDeleteModalOpen}
+          ToggleDeleteModal={ToggleDeleteModal}
+          fetchPosts={fetchPosts}
+          id={id}
+        />
 
         <EditPostModal
           setisEditModalOpen={setisEditModalOpen}

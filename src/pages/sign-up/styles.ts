@@ -4,8 +4,8 @@ import * as Styles from "../../styles/variables";
 export const SignUpForm = styled.form`
   background-color: ${Styles.white};
 
-  width: 500px;
-  height: 205px;
+  width: 100%;
+  max-width: 500px;
 
   border: 1px solid ${Styles.alabaster};
   border-radius: 16px;
@@ -15,6 +15,9 @@ export const SignUpForm = styled.form`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  grid-column: 2;
+
 `
 
 

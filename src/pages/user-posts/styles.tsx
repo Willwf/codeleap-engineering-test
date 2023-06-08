@@ -2,11 +2,11 @@ import styled from "styled-components";
 import * as Styles from "../../styles/variables";
 
 export const AppDiv = styled.div`
-  // position: relative;
+  grid-column: 2;
 `;
 
 export const Header = styled.main`
-  width: 800px;
+  width: 100%;
   height: 80px;
 
   background-color: ${Styles.blue};
@@ -27,7 +27,7 @@ export const Main = styled.main`
   flex-direction: column;
   gap: 24px;
 
-  width: 800px;
+  width: 100%;
 
   background-color: ${Styles.white};
   padding: 24px;
@@ -112,6 +112,6 @@ export const SubmitButton = styled.button`
   }
 
   &:focus {
-    border: 2px solid ${Styles.darkGray};
+    border: 3px solid ${Styles.darkGray};
   }
 `;
