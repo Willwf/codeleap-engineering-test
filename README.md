@@ -20,7 +20,7 @@ Sort the list by the most recent on top.
 
 ### Links
 
-- Solution URL: [https://github.com/Willwf/rock-paper-scissors-game](https://github.com/Willwf/rock-paper-scissors-game)
+- Solution URL: [https://codeleap-engineering-test-seven.vercel.app/](https://codeleap-engineering-test-seven.vercel.app/)
 
 ## My process
 
